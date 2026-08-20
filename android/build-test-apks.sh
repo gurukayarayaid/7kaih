@@ -239,18 +239,21 @@ PY
 sign $KB/test2b/unsigned.apk $REPO/test-apk/test2b-firebase-noprovider.apk
 echo "test2b-firebase-noprovider.apk OK"
 
-# ================= TEST 3: COMPOSE mini =================
-echo "== [TEST 3] compose mini =="
+# ================= TEST 3 (v4): COMPOSE minimal =================
+echo "== [TEST 3 v4] compose minimal =="
 rm -rf $KB/test3 && mkdir -p $KB/test3/classes
 cp -r $T/res $KB/test3/res
 $A2 compile --dir $KB/test3/res -o $KB/test3/res.zip
 $A2 link -o $KB/test3/base.apk -I $KB/sable/android-34/android.jar \
-  --manifest $T/AndroidManifest-c.xml --min-sdk-version 26 --target-sdk-version 34 \
-  --version-code 1 --version-name "1" $KB/test3/res.zip
+  --manifest $T/AndroidManifest-c4.xml --min-sdk-version 26 --target-sdk-version 34 \
+  --version-code 1 --version-name "v4" $KB/test3/res.zip
 CP3="$KB/sable/android-34/android.jar"
-CP3="$CP3:$(ls $KB/kaih/jars/activity-compose.jar $KB/kaih/jars/activity-ktx.jar $KB/kaih/jars/compose-ui.jar $KB/kaih/jars/compose-ui-graphics.jar $KB/kaih/jars/compose-ui-text.jar $KB/kaih/jars/compose-ui-unit.jar $KB/kaih/jars/compose-ui-geometry.jar $KB/kaih/jars/compose-ui-util.jar $KB/kaih/jars/compose-foundation.jar $KB/kaih/jars/compose-foundation-layout.jar $KB/kaih/jars/compose-runtime.jar $KB/kaih/jars/compose-runtime-saveable.jar $KB/kaih/jars/compose-material3.jar $KB/kaih/jars/compose-material.jar $KB/kaih/jars/compose-ripple.jar $KB/kaih/jars/compose-animation.jar $KB/kaih/jars/compose-animation-core.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar $KB/kaih/jars/core.jar $KB/kaih/jars/activity.jar $KB/kaih/jars/lifecycle-runtime.jar $KB/kaih/jars/lifecycle-viewmodel.jar $KB/kaih/jars/lifecycle-common.jar $KB/kaih/jars/savedstate.jar $KB/kaih/jars/collection.jar 2>/dev/null | tr '\n' ':')"
+CP3="$CP3:$(ls $KB/kaih/jars/compose-runtime.jar $KB/kaih/jars/compose-runtime-saveable.jar $KB/kaih/jars/compose-ui.jar $KB/kaih/jars/compose-ui-text.jar $KB/kaih/jars/compose-ui-graphics.jar $KB/kaih/jars/compose-ui-unit.jar $KB/kaih/jars/compose-ui-geometry.jar $KB/kaih/jars/compose-ui-util.jar $KB/kaih/jars/compose-foundation.jar $KB/kaih/jars/compose-foundation-layout.jar $KB/kaih/jars/compose-animation.jar $KB/kaih/jars/compose-animation-core.jar $KB/kaih/jars/lifecycle-runtime.jar $KB/kaih/jars/lifecycle-common.jar $KB/kaih/jars/core.jar $KB/kaih/jars/collection.jar $KB/kaih/jars/annotation.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar $KB/kaih/jars/customview-poolingcontainer.jar 2>/dev/null | tr '\n' ':')"
 $KB/kotlinc19/package/bin/kotlinc -Xplugin=$KB/compose-compiler-158-unshaded.jar -classpath "$CP3" \
   -jvm-target 1.8 -d $KB/test3/classes \
+  $T/src-c/main/java/com/sdn/semambung/kaih/testc/TestLog.kt \
+  $T/src-c/main/java/com/sdn/semambung/kaih/testc/LogProvider.kt \
+  $T/src-c/main/java/com/sdn/semambung/kaih/testc/TestApp.kt \
   $T/src-c/main/java/com/sdn/semambung/kaih/testc/MainActivity.kt
 (cd $KB/test3/classes && python3 -c "
 import zipfile, os
@@ -260,13 +263,17 @@ for r,_,fs in os.walk('.'):
         p=os.path.join(r,f); z.write(p,p)
 z.close()")
 rm -rf $KB/test3/dex && mkdir -p $KB/test3/dex
-CMP_JARS="$(ls $KB/kaih/jars/compose-*.jar $KB/kaih/jars/activity*.jar $KB/kaih/jars/lifecycle-*.jar $KB/kaih/jars/core*.jar $KB/kaih/jars/savedstate*.jar $KB/kaih/jars/annotation.jar $KB/kaih/jars/arch-core-common.jar $KB/kaih/jars/collection.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar 2>/dev/null)"
+CMP_JARS="$(ls $KB/kaih/jars/compose-runtime.jar $KB/kaih/jars/compose-runtime-saveable.jar $KB/kaih/jars/compose-ui.jar $KB/kaih/jars/compose-ui-text.jar $KB/kaih/jars/compose-ui-graphics.jar $KB/kaih/jars/compose-ui-unit.jar $KB/kaih/jars/compose-ui-geometry.jar $KB/kaih/jars/compose-ui-util.jar $KB/kaih/jars/compose-foundation.jar $KB/kaih/jars/compose-foundation-layout.jar $KB/kaih/jars/compose-animation.jar $KB/kaih/jars/compose-animation-core.jar $KB/kaih/jars/lifecycle-runtime.jar $KB/kaih/jars/lifecycle-common.jar $KB/kaih/jars/core.jar $KB/kaih/jars/collection.jar $KB/kaih/jars/annotation.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar $KB/kaih/jars/customview-poolingcontainer.jar 2>/dev/null)"
 java -Xmx3g -cp $KB/r8pre/r8-master.jar com.android.tools.r8.D8 --release --min-api 26 \
   --lib $KB/sable/android-34/android.jar --output $KB/test3/dex \
   $KB/test3/app.jar $KB/kaih/R.jar $CMP_JARS
+# tambah emoji2 dex (dibutuhkan ui-text)
+if [ -f $KB/kaih/dex/tt-emoji2-1.2.0-runtime.dex ]; then
+  cp $KB/kaih/dex/tt-emoji2-1.2.0-runtime.dex $KB/test3/dex/classes2.dex
+fi
 pack_apk $KB/test3/base.apk $KB/test3/dex $KB/test3/unsigned.apk
 sign $KB/test3/unsigned.apk $REPO/test-apk/test3-compose.apk
-echo "test3-compose.apk OK"
+echo "test3-compose.apk (v4) OK"
 
 echo "=== SELESAI ==="
 ls -la $REPO/test-apk/test1-minimal.apk $REPO/test-apk/test2-firebase.apk
