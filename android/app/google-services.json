@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "546434337251",
+    "project_id": "kaih-sdn-semambung",
+    "storage_bucket": "kaih-sdn-semambung.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546434337251:android:bcadc591cf723f211438d6",
+        "android_client_info": {
+          "package_name": "com.sdn.semambung.kaih"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEBK-Ac4_vq3R5WOwXoeMr0gwBkn8AMmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

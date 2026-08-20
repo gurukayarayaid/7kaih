@@ -1,0 +1,30 @@
+# ============================================================
+# CONTOH ATURAN KEAMANAN CLOUD FIRESTORE — APLIKASI 7 KAIH
+# ============================================================
+# Aplikasi ini memakai "login aplikasi" (sama seperti versi web PHP):
+# kredensial pengguna tersimpan di koleksi `pengguna` dan dicocokkan
+# di sisi aplikasi. Oleh karena itu aturan di bawah sengaja dibuka
+# agar aplikasi bisa membaca koleksi `pengguna` untuk login.
+#
+# ⚠️ Untuk produksi sungguhan, sebaiknya gunakan Firebase Authentication
+#    dan batasi akses, misalnya:
+#      match /jurnal_harian/{id} {
+#        allow read, write: if request.auth != null;
+#      }
+#
+# Cara pasang: Firebase Console -> Firestore Database -> Rules
+# (atau: firebase deploy --only firestore:rules)
+# ============================================================
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // DEMO / pengembangan: izinkan baca-tulis penuh.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+  }
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unduh Aplikasi 7 KAIH (Android)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+         background: linear-gradient(160deg, #0c4a6e, #075985 45%, #0369a1);
+         min-height: 100vh; color: #e0f2fe; padding: 24px 16px; }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .card { background: #fff; color: #334155; border-radius: 20px; padding: 28px 24px;
+          box-shadow: 0 20px 50px rgba(2, 6, 23, .35); }
+  h1 { font-size: 22px; color: #0c4a6e; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+  .big-btn { display: block; width: 100%; text-align: center; background: #0284c7;
+             color: #fff; text-decoration: none; font-weight: 800; font-size: 17px;
+             padding: 18px 12px; border-radius: 14px; margin: 10px 0;
+             box-shadow: 0 6px 18px rgba(2, 132, 199, .4); }
+  .big-btn.green { background: #059669; box-shadow: 0 6px 18px rgba(5, 150, 105, .4); }
+  .big-btn.amber { background: #d97706; box-shadow: 0 6px 18px rgba(217, 119, 6, .4); }
+  .big-btn.gray { background: #475569; box-shadow: 0 6px 18px rgba(71, 85, 105, .4); }
+  .small { font-size: 12px; color: #94a3b8; margin: 6px 0 2px; }
+  .note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px;
+          padding: 12px 14px; font-size: 12.5px; color: #92400e; margin: 16px 0; }
+  code { background: #f1f5f9; border-radius: 6px; padding: 2px 6px; font-size: 12px;
+         word-break: break-all; }
+  ol { margin: 8px 0 8px 20px; font-size: 13.5px; line-height: 1.7; }
+  h2 { font-size: 15px; color: #075985; margin: 18px 0 6px; }
+  .hash { font-size: 11px; color: #64748b; word-break: break-all; background: #f8fafc;
+          border-radius: 8px; padding: 10px; margin: 6px 0; }
+  .link { font-size: 12.5px; word-break: break-all; color: #0369a1; }
+  .footer { text-align: center; font-size: 11.5px; color: #bae6fd; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>✦ Aplikasi 7 KAIH — Android</h1>
+    <p class="sub">Versi 1.0 · ditandatangani atas nama <b>Aguk Rudianto</b> /
+      <b>Perusahaan Wabcraft</b> · Android 8.0+</p>
+
+    <a class="big-btn" href="KAIH-1.0-release-signed.apk">📲 Unduh APK (79,7 MB)</a>
+    <p class="small">KAIH-1.0-release-signed.apk · package com.sdn.semambung.kaih</p>
+
+    <h2>🔗 Kalau unduhan besar terputus / lambat</h2>
+    <a class="big-btn gray" href="KAIH-1.0-release-signed.apk.part1">Bagian 1/2 (40 MB)</a>
+    <a class="big-btn gray" href="KAIH-1.0-release-signed.apk.part2">Bagian 2/2 (37 MB)</a>
+    <p class="small">Setelah kedua bagian terunduh, gabungkan kembali:</p>
+    <p><code>Windows (CMD):  copy /b KAIH-1.0-release-signed.apk.part1 + KAIH-1.0-release-signed.apk.part2 KAIH-1.0-release-signed.apk</code></p>
+    <p><code>Linux / Mac / HP:  cat KAIH-1.0-release-signed.apk.part1 KAIH-1.0-release-signed.apk.part2 > KAIH-1.0-release-signed.apk</code></p>
+
+    <h2>🔑 Keystore (untuk update versi berikutnya)</h2>
+    <a class="big-btn amber" href="kaih-release.keystore">Unduh Keystore (2,7 KB)</a>
+
+    <h2>✅ SHA-256 (verifikasi berkas)</h2>
+    <div class="hash" id="hash">memuat…</div>
+
+    <div class="note">⚠️ <b>Firebase:</b> APK ini memakai konfigurasi contoh. Aplikasi
+      terpasang dan berjalan, tetapi koneksi ke Cloud Firestore aktif setelah
+      <code>app/google-services.json</code> diganti dengan berkas dari konsol Firebase
+      Anda lalu dibangun ulang (lihat <code>android/README.md</code>).</div>
+
+    <h2>📱 Cara pasang</h2>
+    <ol>
+      <li>Unduh APK (atau gabungkan bagian 1 + 2).</li>
+      <li>Buka berkas APK di HP Android.</li>
+      <li>Izinkan <b>"instal dari sumber tidak dikenal"</b> bila diminta.</li>
+      <li>Masuk: Murid (pilih nama, sandi = NIS) · Guru (<code>alal</code>) ·
+          Kepala Sekolah (<code>kepsek</code> / <code>123456</code>).</li>
+    </ol>
+  </div>
+  <p class="footer">Aplikasi 7 KAIH — Aguk Rudianto · Wabcraft@2026</p>
+</div>
+<script>
+fetch("SHA256SUMS.txt").then(r => r.text()).then(t => {
+  document.getElementById("hash").textContent = t;
+}).catch(() => { document.getElementById("hash").textContent = "(SHA256SUMS.txt)"; });
+</script>
+</body>
+</html>

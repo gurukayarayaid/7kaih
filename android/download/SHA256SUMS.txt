@@ -1,0 +1,4 @@
+54303a957e311d48846c0586c7b50ecb3b4b25f2496e511f9431bf6970f668dd  KAIH-1.0-release-signed.apk
+b0d8b2f32110bfb48e1f5d6846e6987fed35e19418ce38c2ad8bfcc5e2805d27  KAIH-1.0-release-signed.apk.part1
+7ece7529bd2e56f3eaa294882350109946bbfb1eb19c8e5d91e9bb147ad09615  KAIH-1.0-release-signed.apk.part2
+d82fa42b68e680bb66231e56cf0a2602c79d2022f448b79d48fa7164f7d422e0  kaih-release.keystore
