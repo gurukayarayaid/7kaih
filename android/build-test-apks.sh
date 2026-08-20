@@ -67,8 +67,8 @@ $A2 compile --dir $KB/test1/res -o $KB/test1/res.zip
 $A2 link -o $KB/test1/base.apk -I $KB/sable/android-34/android.jar \
   --manifest $T/AndroidManifest.xml --min-sdk-version 26 --target-sdk-version 34 \
   --version-code 1 --version-name "1" $KB/test1/res.zip
-CP="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib.jar"
-$KB/kotlinc/package/bin/kotlinc -classpath "$CP" -jvm-target 1.8 -d $KB/test1/classes \
+CP="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib-1.9.22.jar"
+$KB/kotlinc19/package/bin/kotlinc -classpath "$CP" -jvm-target 1.8 -d $KB/test1/classes \
   $T/src/main/java/com/sdn/semambung/kaih/test/MainActivity.kt
 (cd $KB/test1/classes && python3 -c "
 import zipfile, os
@@ -80,7 +80,7 @@ z.close()")
 rm -rf $KB/test1/dex && mkdir -p $KB/test1/dex
 java -Xmx3g -cp $KB/r8pre/r8-master.jar com.android.tools.r8.D8 --release --min-api 26 \
   --lib $KB/sable/android-34/android.jar --output $KB/test1/dex \
-  $KB/test1/app.jar $KB/kaih/jars/kotlin-stdlib.jar
+  $KB/test1/app.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar
 pack_apk $KB/test1/base.apk $KB/test1/dex $KB/test1/unsigned.apk
 sign $KB/test1/unsigned.apk $REPO/test-apk/test1-minimal.apk
 echo "test1-minimal.apk OK"
@@ -109,8 +109,8 @@ $A2 compile --dir $KB/test2/res -o $KB/test2/res.zip
 $A2 link -o $KB/test2/base.apk -I $KB/sable/android-34/android.jar \
   --manifest $T/AndroidManifest-fb.xml --min-sdk-version 26 --target-sdk-version 34 \
   --version-code 1 --version-name "1" $KB/test2/res.zip
-CP2="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib.jar:$KB/kaih/jars/tt-firebase-common-20.3.1.jar:$KB/kaih/jars/tt-firebase-components-17.1.0.jar"
-$KB/kotlinc/package/bin/kotlinc -classpath "$CP2" -jvm-target 1.8 -d $KB/test2/classes \
+CP2="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib-1.9.22.jar:$KB/kaih/jars/tt-firebase-common-20.3.1.jar:$KB/kaih/jars/tt-firebase-components-17.1.0.jar"
+$KB/kotlinc19/package/bin/kotlinc -classpath "$CP2" -jvm-target 1.8 -d $KB/test2/classes \
   $T/src-fb/main/java/com/sdn/semambung/kaih/testfb/MainActivity.kt
 (cd $KB/test2/classes && python3 -c "
 import zipfile, os
@@ -119,7 +119,7 @@ for r,_,fs in os.walk('.'):
     for f in fs:
         p=os.path.join(r,f); z.write(p,p)
 z.close()")
-FB_JARS="$KB/kaih/jars/kotlin-stdlib.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar"
+FB_JARS="$KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar"
 FB_JARS="$FB_JARS $KB/kaih/jars/collection.jar $KB/kaih/jars/core.jar $KB/kaih/jars/core-ktx.jar $KB/kaih/jars/arch-core-common.jar"
 FB_JARS="$FB_JARS $KB/kaih/jars/tt-firebase-firestore-24.4.5.jar $KB/kaih/jars/tt-firebase-common-20.3.1.jar $KB/kaih/jars/tt-firebase-components-17.1.0.jar $KB/kaih/jars/tt-firebase-database-collection-18.0.1.jar $KB/kaih/jars/tt-firebase-appcheck-interop-16.1.1.jar $KB/kaih/jars/tt-grpc-android-1.52.1.jar $KB/kaih/jars/tt-play-services-tasks-18.0.2.jar $KB/kaih/jars/tt-play-services-basement-18.1.0.jar $KB/kaih/jars/tt-play-services-base-18.0.1.jar $KB/kaih/jars/protolite.jar $KB/kaih/jars/gson.jar $KB/kaih/jars/failureaccess.jar $KB/kaih/jars/firebase-auth-interop.jar $KB/kaih/jars/tt-versionedparcelable-1.1.1.jar $KB/kaih/jars/tt-startup-runtime-1.1.1.jar $KB/kaih/jars/customview-poolingcontainer.jar"
 rm -rf $KB/test2/dex && mkdir -p $KB/test2/dex
@@ -163,8 +163,8 @@ $A2 compile --dir $KB/test2b/res -o $KB/test2b/res.zip
 $A2 link -o $KB/test2b/base.apk -I $KB/sable/android-34/android.jar \
   --manifest $T/AndroidManifest-fb2.xml --min-sdk-version 26 --target-sdk-version 34 \
   --version-code 1 --version-name "1" $KB/test2b/res.zip
-CP2B="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib.jar:$KB/kaih/jars/tt-firebase-common-20.3.1.jar:$KB/kaih/jars/tt-firebase-components-17.1.0.jar:$KB/kaih/jars/tt-firebase-firestore-24.4.5.jar"
-$KB/kotlinc/package/bin/kotlinc -classpath "$CP2B" -jvm-target 1.8 -d $KB/test2b/classes \
+CP2B="$KB/sable/android-34/android.jar:$KB/kaih/jars/kotlin-stdlib-1.9.22.jar:$KB/kaih/jars/tt-firebase-common-20.3.1.jar:$KB/kaih/jars/tt-firebase-components-17.1.0.jar:$KB/kaih/jars/tt-firebase-firestore-24.4.5.jar"
+$KB/kotlinc19/package/bin/kotlinc -classpath "$CP2B" -jvm-target 1.8 -d $KB/test2b/classes \
   $T/src-fb2/main/java/com/sdn/semambung/kaih/testfb/MainActivity.kt
 (cd $KB/test2b/classes && python3 -c "
 import zipfile, os
@@ -248,8 +248,8 @@ $A2 link -o $KB/test3/base.apk -I $KB/sable/android-34/android.jar \
   --manifest $T/AndroidManifest-c.xml --min-sdk-version 26 --target-sdk-version 34 \
   --version-code 1 --version-name "1" $KB/test3/res.zip
 CP3="$KB/sable/android-34/android.jar"
-CP3="$CP3:$(ls $KB/kaih/jars/activity-compose.jar $KB/kaih/jars/activity-ktx.jar $KB/kaih/jars/compose-ui.jar $KB/kaih/jars/compose-ui-graphics.jar $KB/kaih/jars/compose-ui-text.jar $KB/kaih/jars/compose-ui-unit.jar $KB/kaih/jars/compose-ui-geometry.jar $KB/kaih/jars/compose-ui-util.jar $KB/kaih/jars/compose-foundation.jar $KB/kaih/jars/compose-foundation-layout.jar $KB/kaih/jars/compose-runtime.jar $KB/kaih/jars/compose-runtime-saveable.jar $KB/kaih/jars/compose-material3.jar $KB/kaih/jars/compose-material.jar $KB/kaih/jars/compose-ripple.jar $KB/kaih/jars/compose-animation.jar $KB/kaih/jars/compose-animation-core.jar $KB/kaih/jars/kotlin-stdlib.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar $KB/kaih/jars/core.jar $KB/kaih/jars/activity.jar $KB/kaih/jars/lifecycle-runtime.jar $KB/kaih/jars/lifecycle-viewmodel.jar $KB/kaih/jars/lifecycle-common.jar $KB/kaih/jars/savedstate.jar $KB/kaih/jars/collection.jar 2>/dev/null | tr '\n' ':')"
-$KB/kotlinc/package/bin/kotlinc -Xplugin=$KB/compose-compiler-unshaded.jar -classpath "$CP3" \
+CP3="$CP3:$(ls $KB/kaih/jars/activity-compose.jar $KB/kaih/jars/activity-ktx.jar $KB/kaih/jars/compose-ui.jar $KB/kaih/jars/compose-ui-graphics.jar $KB/kaih/jars/compose-ui-text.jar $KB/kaih/jars/compose-ui-unit.jar $KB/kaih/jars/compose-ui-geometry.jar $KB/kaih/jars/compose-ui-util.jar $KB/kaih/jars/compose-foundation.jar $KB/kaih/jars/compose-foundation-layout.jar $KB/kaih/jars/compose-runtime.jar $KB/kaih/jars/compose-runtime-saveable.jar $KB/kaih/jars/compose-material3.jar $KB/kaih/jars/compose-material.jar $KB/kaih/jars/compose-ripple.jar $KB/kaih/jars/compose-animation.jar $KB/kaih/jars/compose-animation-core.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar $KB/kaih/jars/core.jar $KB/kaih/jars/activity.jar $KB/kaih/jars/lifecycle-runtime.jar $KB/kaih/jars/lifecycle-viewmodel.jar $KB/kaih/jars/lifecycle-common.jar $KB/kaih/jars/savedstate.jar $KB/kaih/jars/collection.jar 2>/dev/null | tr '\n' ':')"
+$KB/kotlinc19/package/bin/kotlinc -Xplugin=$KB/compose-compiler-158-unshaded.jar -classpath "$CP3" \
   -jvm-target 1.8 -d $KB/test3/classes \
   $T/src-c/main/java/com/sdn/semambung/kaih/testc/MainActivity.kt
 (cd $KB/test3/classes && python3 -c "
@@ -260,7 +260,7 @@ for r,_,fs in os.walk('.'):
         p=os.path.join(r,f); z.write(p,p)
 z.close()")
 rm -rf $KB/test3/dex && mkdir -p $KB/test3/dex
-CMP_JARS="$(ls $KB/kaih/jars/compose-*.jar $KB/kaih/jars/activity*.jar $KB/kaih/jars/lifecycle-*.jar $KB/kaih/jars/core*.jar $KB/kaih/jars/savedstate*.jar $KB/kaih/jars/annotation.jar $KB/kaih/jars/arch-core-common.jar $KB/kaih/jars/collection.jar $KB/kaih/jars/kotlin-stdlib.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar 2>/dev/null)"
+CMP_JARS="$(ls $KB/kaih/jars/compose-*.jar $KB/kaih/jars/activity*.jar $KB/kaih/jars/lifecycle-*.jar $KB/kaih/jars/core*.jar $KB/kaih/jars/savedstate*.jar $KB/kaih/jars/annotation.jar $KB/kaih/jars/arch-core-common.jar $KB/kaih/jars/collection.jar $KB/kaih/jars/kotlin-stdlib-1.9.22.jar $KB/kaih/jars/annotations.jar $KB/kaih/jars/coroutines-core.jar $KB/kaih/jars/coroutines-android.jar 2>/dev/null)"
 java -Xmx3g -cp $KB/r8pre/r8-master.jar com.android.tools.r8.D8 --release --min-api 26 \
   --lib $KB/sable/android-34/android.jar --output $KB/test3/dex \
   $KB/test3/app.jar $KB/kaih/R.jar $CMP_JARS

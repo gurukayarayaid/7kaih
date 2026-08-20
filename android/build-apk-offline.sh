@@ -19,7 +19,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 java -version 2>&1 | head -1
 
 echo "### [1] Kotlin compiler 2.0.20 (npm)"
-if [ ! -f $KB/kotlinc/package/bin/kotlinc ]; then
+if [ ! -f $KB/kotlinc19/package/bin/kotlinc ]; then
   curl -s -o $KB/kc.tgz "https://registry.npmjs.org/kotlin-compiler/-/kotlin-compiler-2.0.20.tgz"
   mkdir -p $KB/kotlinc && tar -xzf $KB/kc.tgz -C $KB/kotlinc
 fi
@@ -68,7 +68,7 @@ echo "### [6] Un-shade compose compiler plugin"
 ASM=$(ls $KB/baby/Android/BabyGrowth/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.7/*/asm-9.7.jar | head -1)
 ASMC=$(ls $KB/baby/Android/BabyGrowth/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.7/*/asm-commons-9.7.jar | head -1)
 ASMT=$(ls $KB/baby/Android/BabyGrowth/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.7/*/asm-tree-9.7.jar | head -1)
-if [ ! -f $KB/compose-compiler-unshaded.jar ]; then
+if [ ! -f $KB/compose-compiler-158-unshaded.jar ]; then
   mkdir -p $KB/unshade
   cat > $KB/unshade/U.kt <<'KT'
 import org.objectweb.asm.ClassReader
@@ -115,8 +115,8 @@ fun main(args: Array<String>) {
     println("remapped $n classes -> $outJar")
 }
 KT
-  $KB/kotlinc/package/bin/kotlinc $KB/unshade/U.kt -classpath $ASM:$ASMC:$ASMT -include-runtime -d $KB/unshade/u.jar 2>&1 | head -3
-  java -cp $KB/unshade/u.jar:$ASM:$ASMC:$ASMT UKt $KB/kotlinc/package/lib/compose-compiler.jar $KB/compose-compiler-unshaded.jar
+  $KB/kotlinc19/package/bin/kotlinc $KB/unshade/U.kt -classpath $ASM:$ASMC:$ASMT -include-runtime -d $KB/unshade/u.jar 2>&1 | head -3
+  java -cp $KB/unshade/u.jar:$ASM:$ASMC:$ASMT UKt $KB/kotlinc/package/lib/compose-compiler.jar $KB/compose-compiler-158-unshaded.jar
 fi
 
 echo "### [7] Staging jars (dari cache)"
@@ -391,14 +391,14 @@ fun main(args: Array<String>) {
     println("total: $total -> $outJar")
 }
 KT
-$KB/kotlinc/package/bin/kotlinc $KB/rgen/GenR.kt -classpath $ASM -include-runtime -d $KB/rgen/genr.jar 2>&1 | grep error | head -3 || true
+$KB/kotlinc19/package/bin/kotlinc $KB/rgen/GenR.kt -classpath $ASM -include-runtime -d $KB/rgen/genr.jar 2>&1 | grep error | head -3 || true
 java -cp $KB/rgen/genr.jar:$ASM GenRKt $KB/kaih/ids.txt $KB/kaih/rtxt $KB/kaih/R.jar 2>&1 | tail -3
 
 echo "### [12] Kompilasi Kotlin app"
 CP=$(ls $KB/kaih/jars/*.jar | tr '\n' ':')$KB/sable/android-34/android.jar
 find $REPO/app/src/main/java -name "*.kt" | sort > $KB/kaih/sources.txt
 rm -rf $KB/kaih/classes && mkdir -p $KB/kaih/classes
-$KB/kotlinc/package/bin/kotlinc -Xplugin=$KB/compose-compiler-unshaded.jar -classpath "$CP" \
+$KB/kotlinc19/package/bin/kotlinc -Xplugin=$KB/compose-compiler-158-unshaded.jar -classpath "$CP" \
   -jvm-target 1.8 -d $KB/kaih/classes @$KB/kaih/sources.txt 2>&1 | grep -E "error:" | head -10 || true
 echo "kelas: $(find $KB/kaih/classes -name '*.class' | wc -l)"
 [ $(find $KB/kaih/classes -name '*.class' | wc -l) -gt 10 ] || { echo "KOMPILASI GAGAL"; exit 1; }
@@ -506,7 +506,7 @@ fun main(args: Array<String>) {
     println("APK ditandatangani: $outApk")
 }
 KT
-$KB/kotlinc/package/bin/kotlinc $KB/kaih/Signer.kt -classpath $KB/kaih/apksig.jar -include-runtime -d $KB/kaih/signer.jar 2>&1 | grep error | head -3 || true
+$KB/kotlinc19/package/bin/kotlinc $KB/kaih/Signer.kt -classpath $KB/kaih/apksig.jar -include-runtime -d $KB/kaih/signer.jar 2>&1 | grep error | head -3 || true
 java -cp $KB/kaih/signer.jar:$KB/kaih/apksig.jar SignerKt \
   $REPO/kaih-release.keystore wabcraft2026 wabcraft \
   $KB/kaih/unsigned.apk $KB/KAIH-1.0-release-signed.apk
